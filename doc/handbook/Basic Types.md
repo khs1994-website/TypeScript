@@ -97,8 +97,6 @@ x[3] = "world"; // Error, Property '3' does not exist on type '[string, number]'
 console.log(x[5].toString()); // Error, Property '5' does not exist on type '[string, number]'.
 ```
 
-联合类型是高级主题，我们会在以后的章节里讨论它。
-
 # 枚举
 
 `enum`类型是对JavaScript标准数据类型的一个补充。
@@ -161,6 +159,8 @@ let prettySure: Object = 4;
 prettySure.toFixed(); // Error: Property 'toFixed' doesn't exist on type 'Object'.
 ```
 
+> 注意：应避免使用`Object`，而是使用非原始`object`类型，正如[Do's and Don'ts](./declaration-files/do-s-and-don-ts.html#general-types)里所讲的那样。
+
 当你只知道一部分数据的类型时，`any`类型也是有用的。
 比如，你有一个数组，它包含了不同的类型的数据：
 
@@ -181,7 +181,7 @@ function warnUser(): void {
 }
 ```
 
-声明一个`void`类型的变量没有什么大用，因为你只能为它赋予`undefined`和`null`：
+声明一个`void`类型的变量没有什么大用，因为你只能为它赋予`null`（只在`--strictNullChecks`未指定时）和`undefined`：
 
 ```ts
 let unusable: void = undefined;
@@ -204,7 +204,8 @@ let n: null = null;
 然而，当你指定了`--strictNullChecks`标记，`null`和`undefined`只能赋值给`any`和它们各自的类型（有一个例外是`undefined`还可以赋值给`void`类型）。
 这能避免*很多*常见的问题。
 也许在某处你想传入一个`string`或`null`或`undefined`，你可以使用联合类型`string | null | undefined`。
-再次说明，稍后我们会介绍联合类型。
+
+联合类型是高级主题，我们会在以后的章节里讨论它。
 
 > 注意：我们鼓励尽可能地使用`--strictNullChecks`，但在本手册里我们假设这个标记是关闭的。
 
@@ -288,5 +289,5 @@ let strLength: number = (someValue as string).length;
 # <a name="a-note-about-let"></a>关于`let`
 
 你可能已经注意到了，我们使用`let`关键字来代替大家所熟悉的JavaScript关键字`var`。
-`let`关键字是JavaScript的一个新概念，TypeScript实现了它。
+`let`是ES2015引入的关键字，它比`var`更加安全，因此被看做是声明变量的标准方式。
 我们会在以后详细介绍它，很多常见的问题都可以通过使用`let`来解决，所以尽可能地使用`let`来代替`var`吧。
