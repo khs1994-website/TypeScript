@@ -32,14 +32,15 @@ jobs:
           GITBOOK_TITLE: "[Typescript 中文文档](https://github.com/zhongsp/TypeScript)"
         run: |
           set -x
+          rm -rf ${SRC_FOLDER}/.github/workflows
           mkdir -p ${SRC_FOLDER}/.github/workflows
           cp -a .github/workflows/gitbook.yaml ${SRC_FOLDER}/.github/workflows/
           cp book.json ${SRC_FOLDER}
           cd ${SRC_FOLDER}
           rm -rf doc
-          npm init -f
-          npm install gitbook-summary
-          npx book sm -t "${GITBOOK_TITLE}" -i node_modules
+          echo npm init -f
+          echo npm install gitbook-summary
+          echo npx book sm -t "${GITBOOK_TITLE}" -i node_modules
           rm -rf node_modules package.json package-lock.json
           ls -la
       - name: Push docs src
